@@ -43,6 +43,7 @@ public class NativeAppScrollActivity {
 		}
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 		driver.findElementByXPath("//*[@text='Art of Asia']").click();
+		
 	}
 
 }

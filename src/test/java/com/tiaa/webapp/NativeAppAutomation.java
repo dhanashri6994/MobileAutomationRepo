@@ -40,6 +40,8 @@ public class NativeAppAutomation {
 		String msg=driver.findElementByXPath("//*[@text='Invalid password']").getText();
 		System.out.println("msg :"+msg);
 		
+		driver.closeApp();
+		
 	}
 
 }

@@ -23,7 +23,7 @@ public class OpenBrowserTest {
 			cap.setCapability("platformName", "Android");
 			cap.setCapability("browserName", "Chrome");
 			cap.setCapability("chromedriverExecutable", "C:\\Dhanashri\\chromedriver_win32\\chromedriver.exe");
-			
+			cap.setCapability("udid","emulator-5554");
 			AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(new URL("http://localhost:4723/wd/hub"), cap);
 			driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 			driver.get("https://magento.com");

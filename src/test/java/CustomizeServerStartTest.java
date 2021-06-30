@@ -1,7 +1,4 @@
-package com.tiaa.serverAutomation;
-
 import java.io.File;
-import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebElement;
@@ -9,26 +6,32 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
+import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
-public class DefaultServerStart {
+public class CustomizeServerStartTest {
+
 
 	public static void main(String[] args) throws InterruptedException   {
 		// TODO Auto-generated method stub
 
 		AppiumDriverLocalService service=null;
 
+
 		try {
+			//Custimizing the server details. instead of using default server
+			AppiumServiceBuilder builder = new AppiumServiceBuilder()
+					.usingPort(1212) //for specific port
+					//.usingAnyFreePort() //for any free port
+					.withLogFile(new File("Logs/ServiceLog.log"))
+					.withArgument(GeneralServerFlag.RELAXED_SECURITY);
 
-			service=AppiumDriverLocalService.buildDefaultService();//port 4723// Default settings
-			System.out.println(service.isRunning());
-
-			service.start();
+			service= AppiumDriverLocalService.buildService(builder);
+			if(!service.isRunning())
+			{
+				service.start();
+			}
 			
-			//Load Desired capabilities and connect to android driver
-			System.out.println(service.isRunning());
-			System.out.println(service.getUrl());
-
-
 			//DesiredCapabilities
 			DesiredCapabilities cap= new DesiredCapabilities();
 			cap.setCapability("deviceName", "redmi");
@@ -37,11 +40,11 @@ public class DefaultServerStart {
 			AndroidDriver<WebElement> driver = new AndroidDriver<WebElement>(service,cap);//Added server details thorough service object
 			driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
 			Thread.sleep(3000);
-		} 
+			System.out.println(service.getUrl());
+		}
 		finally {
 			service.stop();
 		}
-		System.out.println(service.isRunning());
 	}
 
 }
